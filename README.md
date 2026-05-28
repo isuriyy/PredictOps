@@ -170,6 +170,20 @@ This is an initial baseline and will be improved with richer operational pattern
 * Deploy to cloud
 * Use real pipeline execution logs
 
+## Screenshots
+
+### Swagger API
+![Swagger API](docs/screenshots/swagger-api.png)
+
+### Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
+
+### Slack Alert Integration
+![Slack Alert](docs/screenshots/slack-alert.png)
+
+### Dockerized Deployment
+![Docker Containers](docs/screenshots/docker-containers.png)
+
 ## Project Status
 
 PredictOps currently supports end-to-end ML risk prediction, API serving, PostgreSQL logging, dashboard visualization, Slack alerting, and Dockerized execution.
