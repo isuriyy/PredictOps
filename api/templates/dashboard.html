@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PredictOps Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background: #f4f6f8;
+        }
+
+        h1 {
+            color: #1f2937;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        .HIGH {
+            color: white;
+            background: #dc2626;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .MEDIUM {
+            color: white;
+            background: #f59e0b;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .LOW {
+            color: white;
+            background: #16a34a;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>PredictOps Dashboard</h1>
+
+<div class="card">
+    <h2>Recent Pipeline Risk Predictions</h2>
+    <p>Latest predictions logged by the PredictOps API.</p>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Prediction Time</th>
+            <th>Risk Score</th>
+            <th>Risk Level</th>
+            <th>Prev Runtime</th>
+            <th>Prev CPU</th>
+            <th>Prev Memory</th>
+            <th>Retries</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.prediction_time }}</td>
+            <td>{{ log.failure_risk_score }}</td>
+            <td><span class="{{ log.risk_level }}">{{ log.risk_level }}</span></td>
+            <td>{{ log.prev_runtime }}</td>
+            <td>{{ log.prev_cpu }}</td>
+            <td>{{ log.prev_memory }}</td>
+            <td>{{ log.prev_retries }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
