@@ -173,16 +173,17 @@ This is an initial baseline and will be improved with richer operational pattern
 ## Screenshots
 
 ### Swagger API
-![Swagger API](docs/screenshots/swagger-api.png)
+![Swagger API](dashboard/03_swagger_api.png)
 
 ### Dashboard
-![Dashboard](docs/screenshots/dashboard.png)
+![Dashboard](dashboard/01_Dashboard.png)
 
 ### Slack Alert Integration
-![Slack Alert](docs/screenshots/slack-alert.png)
+![Slack Alert](dashboard/02_Slack_Alerts.png)
 
 ### Dockerized Deployment
-![Docker Containers](docs/screenshots/docker-containers.png)
+![Docker Containers](dashboard/04_Docker_containers.png)
+
 
 ## Project Status
 
