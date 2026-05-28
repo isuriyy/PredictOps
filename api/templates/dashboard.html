@@ -3,6 +3,7 @@
 <head>
     <title>PredictOps Dashboard</title>
     <meta http-equiv="refresh" content="30">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -10,10 +11,16 @@
             background: #f4f6f8;
             margin: 0;
             padding: 30px;
+            color: #111827;
         }
 
         h1 {
-            color: #111827;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 25px;
         }
 
         .cards {
@@ -26,8 +33,8 @@
         .card {
             background: white;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            border-radius: 14px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.08);
         }
 
         .card h3 {
@@ -37,18 +44,37 @@
         }
 
         .card p {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
             margin: 10px 0 0;
-            color: #111827;
+        }
+
+        .charts {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+        }
+
+        .chart-card h2 {
+            margin-top: 0;
+            font-size: 18px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.08);
         }
 
         th {
@@ -68,6 +94,7 @@
             color: white;
             padding: 6px 10px;
             border-radius: 6px;
+            font-weight: bold;
         }
 
         .MEDIUM {
@@ -75,6 +102,7 @@
             color: white;
             padding: 6px 10px;
             border-radius: 6px;
+            font-weight: bold;
         }
 
         .LOW {
@@ -82,6 +110,14 @@
             color: white;
             padding: 6px 10px;
             border-radius: 6px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 900px) {
+            .cards,
+            .charts {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -89,7 +125,7 @@
 <body>
 
 <h1>PredictOps Monitoring Dashboard</h1>
-<p>Auto-refreshes every 30 seconds.</p>
+<p class="subtitle">Live ML pipeline risk monitoring. Auto-refreshes every 30 seconds.</p>
 
 <div class="cards">
     <div class="card">
@@ -110,6 +146,18 @@
     <div class="card">
         <h3>Low Risk</h3>
         <p>{{ low_risk_count }}</p>
+    </div>
+</div>
+
+<div class="charts">
+    <div class="chart-card">
+        <h2>Risk Distribution</h2>
+        <canvas id="riskDistributionChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+        <h2>Risk Score Trend</h2>
+        <canvas id="riskTrendChart"></canvas>
     </div>
 </div>
 
@@ -141,5 +189,63 @@
     </tbody>
 </table>
 
+<script>
+    const highRiskCount = {{ high_risk_count }};
+    const mediumRiskCount = {{ medium_risk_count }};
+    const lowRiskCount = {{ low_risk_count }};
+
+    const riskLabels = [
+        {% for log in logs|reverse %}
+            "{{ log.prediction_time }}",
+        {% endfor %}
+    ];
+
+    const riskScores = [
+        {% for log in logs|reverse %}
+            {{ log.failure_risk_score }},
+        {% endfor %}
+    ];
+
+    new Chart(document.getElementById("riskDistributionChart"), {
+        type: "doughnut",
+        data: {
+            labels: ["HIGH", "MEDIUM", "LOW"],
+            datasets: [{
+                data: [highRiskCount, mediumRiskCount, lowRiskCount],
+                backgroundColor: ["#dc2626", "#f59e0b", "#16a34a"]
+            }]
+        }
+    });
+
+    new Chart(document.getElementById("riskTrendChart"), {
+        type: "line",
+        data: {
+            labels: riskLabels,
+            datasets: [{
+                label: "Failure Risk Score",
+                data: riskScores,
+                borderColor: "#2563eb",
+                backgroundColor: "rgba(37, 99, 235, 0.15)",
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 0,
+                    max: 1
+                },
+                x: {
+                    ticks: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+</script>
+
 </body>
 </html>
+        
