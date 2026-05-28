@@ -1,19 +1,11 @@
-import os
 import requests
-
 from config import SLACK_WEBHOOK_URL
-from pathlib import Path
-from dotenv import load_dotenv
 
-BASE_DIR = Path(__file__).resolve().parents[1]
-load_dotenv(BASE_DIR / ".env")
-
-SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL")
 
 def send_high_risk_alert(risk_score, metrics):
     if not SLACK_WEBHOOK_URL:
-        print("Slack webhook URL is missing. Alert not sent.")
-        return
+        print("Slack webhook URL missing. Alert skipped.")
+        return False
 
     message = {
         "text": (
@@ -27,5 +19,10 @@ def send_high_risk_alert(risk_score, metrics):
         )
     }
 
-    response = requests.post(SLACK_WEBHOOK_URL, json=message)
-    print("Slack alert sent:", response.status_code)
+    try:
+        response = requests.post(SLACK_WEBHOOK_URL, json=message, timeout=5)
+        print("Slack alert sent:", response.status_code)
+        return response.status_code == 200
+    except requests.RequestException as e:
+        print("Slack alert failed:", e)
+        return False
