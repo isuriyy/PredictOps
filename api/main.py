@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from sqlalchemy import create_engine
 from datetime import datetime
 
+from config import DATABASE_URL, MODEL_PATH, HIGH_RISK_THRESHOLD, MEDIUM_RISK_THRESHOLD
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
@@ -31,6 +32,8 @@ DATABASE_URL = (
 
 engine = create_engine(DATABASE_URL)
 templates = Jinja2Templates(directory="api/templates")
+model = joblib.load(MODEL_PATH)
+engine = create_engine(DATABASE_URL)
 
 class PipelineMetrics(BaseModel):
     prev_runtime: float
@@ -64,6 +67,13 @@ def predict_risk(metrics: PipelineMetrics):
 
     if risk_score >= 0.70:
         send_high_risk_alert(risk_score, input_data)
+
+    if risk_score >= HIGH_RISK_THRESHOLD:
+        risk_level = "HIGH"
+    elif risk_score >= MEDIUM_RISK_THRESHOLD:
+        risk_level = "MEDIUM"
+    else:
+        risk_level = "LOW"
 
     prediction_record = input_data.copy()
     prediction_record["prediction_time"] = datetime.now()
