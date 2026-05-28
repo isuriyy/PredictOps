@@ -109,13 +109,34 @@ def get_prediction_logs(limit: int = 10):
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):
     df = pd.read_sql(
-        "SELECT * FROM prediction_logs ORDER BY prediction_time DESC LIMIT 20",
+        "SELECT * FROM prediction_logs ORDER BY prediction_time DESC LIMIT 50",
         engine
     )
 
+    total_predictions = len(df)
+    high_risk_count = len(df[df["risk_level"] == "HIGH"])
+    medium_risk_count = len(df[df["risk_level"] == "MEDIUM"])
+    low_risk_count = len(df[df["risk_level"] == "LOW"])
+
     logs = df.to_dict(orient="records")
 
+    context = {
+        "request": request,
+        "logs": logs,
+        "total_predictions": total_predictions,
+        "high_risk_count": high_risk_count,
+        "medium_risk_count": medium_risk_count,
+        "low_risk_count": low_risk_count,
+    }
+
     return templates.TemplateResponse(
+        request,
         "dashboard.html",
-        {"request": request, "logs": logs}
-    )
+        {
+            "logs": logs,
+            "total_predictions": total_predictions,
+            "high_risk_count": high_risk_count,
+            "medium_risk_count": medium_risk_count,
+            "low_risk_count": low_risk_count,
+    }
+)

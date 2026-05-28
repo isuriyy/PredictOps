@@ -2,70 +2,115 @@
 <html>
 <head>
     <title>PredictOps Dashboard</title>
+    <meta http-equiv="refresh" content="30">
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 30px;
             background: #f4f6f8;
+            margin: 0;
+            padding: 30px;
         }
 
         h1 {
-            color: #1f2937;
+            color: #111827;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 25px;
         }
 
         .card {
             background: white;
             padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .card p {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 10px 0 0;
+            color: #111827;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-        }
-
-        th, td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
         th {
             background: #111827;
             color: white;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .HIGH {
-            color: white;
             background: #dc2626;
+            color: white;
             padding: 6px 10px;
             border-radius: 6px;
         }
 
         .MEDIUM {
-            color: white;
             background: #f59e0b;
+            color: white;
             padding: 6px 10px;
             border-radius: 6px;
         }
 
         .LOW {
-            color: white;
             background: #16a34a;
+            color: white;
             padding: 6px 10px;
             border-radius: 6px;
         }
     </style>
 </head>
+
 <body>
 
-<h1>PredictOps Dashboard</h1>
+<h1>PredictOps Monitoring Dashboard</h1>
+<p>Auto-refreshes every 30 seconds.</p>
 
-<div class="card">
-    <h2>Recent Pipeline Risk Predictions</h2>
-    <p>Latest predictions logged by the PredictOps API.</p>
+<div class="cards">
+    <div class="card">
+        <h3>Total Predictions</h3>
+        <p>{{ total_predictions }}</p>
+    </div>
+
+    <div class="card">
+        <h3>High Risk</h3>
+        <p>{{ high_risk_count }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Medium Risk</h3>
+        <p>{{ medium_risk_count }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Low Risk</h3>
+        <p>{{ low_risk_count }}</p>
+    </div>
 </div>
 
 <table>
@@ -74,12 +119,13 @@
             <th>Prediction Time</th>
             <th>Risk Score</th>
             <th>Risk Level</th>
-            <th>Prev Runtime</th>
-            <th>Prev CPU</th>
-            <th>Prev Memory</th>
+            <th>Runtime</th>
+            <th>CPU</th>
+            <th>Memory</th>
             <th>Retries</th>
         </tr>
     </thead>
+
     <tbody>
         {% for log in logs %}
         <tr>
