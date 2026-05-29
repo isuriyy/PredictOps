@@ -117,6 +117,30 @@ def metrics_summary():
         else 0,
     }
 
+@app.get("/metrics-summary")
+def metrics_summary():
+    df = pd.read_sql(
+        "SELECT * FROM prediction_logs ORDER BY prediction_time DESC LIMIT 50",
+        engine,
+    )
+
+    if df.empty:
+        return {
+            "total_predictions": 0,
+            "high_risk_count": 0,
+            "medium_risk_count": 0,
+            "low_risk_count": 0,
+            "average_risk_score": 0,
+        }
+
+    return {
+        "total_predictions": len(df),
+        "high_risk_count": len(df[df["risk_level"] == "HIGH"]),
+        "medium_risk_count": len(df[df["risk_level"] == "MEDIUM"]),
+        "low_risk_count": len(df[df["risk_level"] == "LOW"]),
+        "average_risk_score": round(float(df["failure_risk_score"].mean()), 3),
+    }
+
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):
     df = pd.read_sql(
