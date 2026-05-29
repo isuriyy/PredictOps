@@ -7,6 +7,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from sqlalchemy import create_engine
+from prometheus_client import Gauge, generate_latest, CONTENT_TYPE_LATEST
+from fastapi.responses import Response
 
 from config import (
     DATABASE_URL,
@@ -23,6 +25,11 @@ app = FastAPI(title="PredictOps API")
 model = joblib.load(MODEL_PATH)
 engine = create_engine(DATABASE_URL)
 templates = Jinja2Templates(directory="api/templates")
+total_predictions_gauge = Gauge("predictops_total_predictions", "Total recent predictions")
+high_risk_gauge = Gauge("predictops_high_risk_count", "High risk prediction count")
+medium_risk_gauge = Gauge("predictops_medium_risk_count", "Medium risk prediction count")
+low_risk_gauge = Gauge("predictops_low_risk_count", "Low risk prediction count")
+average_risk_score_gauge = Gauge("predictops_average_risk_score", "Average failure risk score")
 
 
 class PipelineMetrics(BaseModel):
@@ -100,22 +107,6 @@ def get_prediction_logs(limit: int = 10):
     df = pd.read_sql(query, engine)
     return df.to_dict(orient="records")
 
-@app.get("/metrics-summary")
-def metrics_summary():
-    df = pd.read_sql(
-        "SELECT * FROM prediction_logs ORDER BY prediction_time DESC LIMIT 50",
-        engine,
-    )
-
-    return {
-        "total_predictions": len(df),
-        "high_risk_count": len(df[df["risk_level"] == "HIGH"]),
-        "medium_risk_count": len(df[df["risk_level"] == "MEDIUM"]),
-        "low_risk_count": len(df[df["risk_level"] == "LOW"]),
-        "average_risk_score": round(float(df["failure_risk_score"].mean()), 3)
-        if not df.empty
-        else 0,
-    }
 
 @app.get("/metrics-summary")
 def metrics_summary():
@@ -140,6 +131,28 @@ def metrics_summary():
         "low_risk_count": len(df[df["risk_level"] == "LOW"]),
         "average_risk_score": round(float(df["failure_risk_score"].mean()), 3),
     }
+
+@app.get("/metrics")
+def prometheus_metrics():
+    df = pd.read_sql(
+        "SELECT * FROM prediction_logs ORDER BY prediction_time DESC LIMIT 50",
+        engine,
+    )
+
+    if df.empty:
+        total_predictions_gauge.set(0)
+        high_risk_gauge.set(0)
+        medium_risk_gauge.set(0)
+        low_risk_gauge.set(0)
+        average_risk_score_gauge.set(0)
+    else:
+        total_predictions_gauge.set(len(df))
+        high_risk_gauge.set(len(df[df["risk_level"] == "HIGH"]))
+        medium_risk_gauge.set(len(df[df["risk_level"] == "MEDIUM"]))
+        low_risk_gauge.set(len(df[df["risk_level"] == "LOW"]))
+        average_risk_score_gauge.set(float(df["failure_risk_score"].mean()))
+
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):
