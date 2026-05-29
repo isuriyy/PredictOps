@@ -10,6 +10,7 @@ services:
       - "5433:5432"
     volumes:
       - predictops_postgres_data:/var/lib/postgresql/data
+  
 
   api:
     build: .
@@ -20,6 +21,16 @@ services:
       - .env
     depends_on:
       - db
+      
+  prometheus:
+    image: prom/prometheus
+    container_name: predictops-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - api
 
 volumes:
   predictops_postgres_data:
