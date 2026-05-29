@@ -100,6 +100,22 @@ def get_prediction_logs(limit: int = 10):
     df = pd.read_sql(query, engine)
     return df.to_dict(orient="records")
 
+@app.get("/metrics-summary")
+def metrics_summary():
+    df = pd.read_sql(
+        "SELECT * FROM prediction_logs ORDER BY prediction_time DESC LIMIT 50",
+        engine,
+    )
+
+    return {
+        "total_predictions": len(df),
+        "high_risk_count": len(df[df["risk_level"] == "HIGH"]),
+        "medium_risk_count": len(df[df["risk_level"] == "MEDIUM"]),
+        "low_risk_count": len(df[df["risk_level"] == "LOW"]),
+        "average_risk_score": round(float(df["failure_risk_score"].mean()), 3)
+        if not df.empty
+        else 0,
+    }
 
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):
