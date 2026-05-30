@@ -30,7 +30,10 @@ high_risk_gauge = Gauge("predictops_high_risk_count", "High risk prediction coun
 medium_risk_gauge = Gauge("predictops_medium_risk_count", "Medium risk prediction count")
 low_risk_gauge = Gauge("predictops_low_risk_count", "Low risk prediction count")
 average_risk_score_gauge = Gauge("predictops_average_risk_score", "Average failure risk score")
-
+average_runtime_gauge = Gauge(
+    "predictops_average_runtime",
+    "Average previous pipeline runtime"
+)
 
 class PipelineMetrics(BaseModel):
     prev_runtime: float
@@ -145,12 +148,14 @@ def prometheus_metrics():
         medium_risk_gauge.set(0)
         low_risk_gauge.set(0)
         average_risk_score_gauge.set(0)
+        average_runtime_gauge.set(0)
     else:
         total_predictions_gauge.set(len(df))
         high_risk_gauge.set(len(df[df["risk_level"] == "HIGH"]))
         medium_risk_gauge.set(len(df[df["risk_level"] == "MEDIUM"]))
         low_risk_gauge.set(len(df[df["risk_level"] == "LOW"]))
         average_risk_score_gauge.set(float(df["failure_risk_score"].mean()))
+        average_runtime_gauge.set(float(df["prev_runtime"].mean()))
 
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
