@@ -184,6 +184,29 @@ This is an initial baseline and will be improved with richer operational pattern
 ### Dockerized Deployment
 ![Docker Containers](dashboard/04_Docker_containers.png)
 
+## Monitoring Dashboard
+
+### Grafana Dashboard
+![Grafana Dashboard](dashboard/05_Grafana_Dashboard_1.png)
+
+### Risk Distribution
+![Grafana Dashboard](dashboard/06_Grafana_Dashboard_2.png)
+
+### Prometheus Targets
+![Prometheus Targets](dashboard/07_Prometheus_Targets.png)
+
+### Prometheus Metrics
+![Prometheus Metrics](dashboard/08_Prometheus_Metrics.png)
+
+### API Health Endpoint
+![API Health](dashboard/09_API_Health.png)
+
+### Metrics Endpoint
+![Metrics Endpoint](dashboard/09_Prometheus_Metrics_Endpoint.png)
+
+### Docker Containers
+![Docker Containers](dashboard/11_Docker_Containers.png)
+
 
 ## Project Status
 
