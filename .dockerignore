@@ -1,5 +1,15 @@
 venv/
 __pycache__/
 *.pyc
-.git
-.env
+
+.git/
+.gitignore
+
+airflow/logs/
+airflow/plugins/
+airflow/airflow.db
+airflow/*.db
+
+dashboard/
+docs/
+data/

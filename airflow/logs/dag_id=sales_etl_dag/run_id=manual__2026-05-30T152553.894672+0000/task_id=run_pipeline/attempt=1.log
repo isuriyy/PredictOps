@@ -1,0 +1,18 @@
+[2026-05-30T15:25:57.792+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-05-30T15:25:57.805+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: sales_etl_dag.run_pipeline manual__2026-05-30T15:25:53.894672+00:00 [queued]>
+[2026-05-30T15:25:57.814+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: sales_etl_dag.run_pipeline manual__2026-05-30T15:25:53.894672+00:00 [queued]>
+[2026-05-30T15:25:57.816+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 1
+[2026-05-30T15:25:57.843+0000] {taskinstance.py:2890} INFO - Executing <Task(PythonOperator): run_pipeline> on 2026-05-30 15:25:53.894672+00:00
+[2026-05-30T15:25:57.853+0000] {standard_task_runner.py:72} INFO - Started process 171 to run task
+[2026-05-30T15:25:57.896+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'sales_etl_dag', 'run_pipeline', 'manual__2026-05-30T15:25:53.894672+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/sales_etl_dag.py', '--cfg-path', '/tmp/tmp2t68zw8z']
+[2026-05-30T15:25:57.909+0000] {standard_task_runner.py:105} INFO - Job 6: Subtask run_pipeline
+[2026-05-30T15:25:58.195+0000] {task_command.py:467} INFO - Running <TaskInstance: sales_etl_dag.run_pipeline manual__2026-05-30T15:25:53.894672+00:00 [running]> on host edca16bc3475
+[2026-05-30T15:25:58.426+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='sales_etl_dag' AIRFLOW_CTX_TASK_ID='run_pipeline' AIRFLOW_CTX_EXECUTION_DATE='2026-05-30T15:25:53.894672+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-30T15:25:53.894672+00:00'
+[2026-05-30T15:25:58.430+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2026-05-30T15:25:58.484+0000] {logging_mixin.py:190} INFO - Running sales ETL pipeline...
+[2026-05-30T15:25:58.485+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-05-30T15:25:58.498+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2026-05-30T15:25:58.499+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=sales_etl_dag, task_id=run_pipeline, run_id=manual__2026-05-30T15:25:53.894672+00:00, execution_date=20260530T152553, start_date=20260530T152557, end_date=20260530T152558
+[2026-05-30T15:25:58.551+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-05-30T15:25:58.562+0000] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-30T15:25:58.563+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
