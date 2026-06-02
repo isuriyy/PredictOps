@@ -278,8 +278,6 @@ Resolved alerts are also automatically sent.
 ### Docker Containers
 ![Docker Containers](dashboard/11_Docker_Containers.png)
 
-## Screenshots
-
 ### Airflow DAG Overview
 ![Airflow DAG](dashboard/airflow_dag_overview.png)
 
