@@ -1,7 +1,16 @@
-venv/
+# Airflow runtime logs
+airflow/logs/
+airflow/*.db
+airflow/airflow.db
+airflow/webserver_config.py
+
+# Python
 __pycache__/
 *.pyc
+
+# Environment
 .env
-*.csv
-*.pkl
-mlruns/
+venv/
+
+# Docker/Postgres/Grafana runtime
+*.log

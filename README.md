@@ -13,44 +13,74 @@ PredictOps focuses on predictive reliability by identifying early signs of pipel
 ## Key Features
 
 * Synthetic pipeline telemetry generation
-* PostgreSQL-based operational metadata storage
+* PostgreSQL operational metadata storage
 * Predictive feature engineering
 * Machine learning failure-risk prediction
 * FastAPI prediction API
-* Prediction logging to PostgreSQL
-* HTML dashboard for recent predictions
-* Slack alerts for high-risk predictions
-* Dockerized API and PostgreSQL stack
+* Prediction logging and analytics
+* Airflow ETL orchestration
+* Prometheus metrics collection
+* Grafana monitoring dashboards
+* Grafana alert management
+* Discord alert notifications
+* Runtime SLA monitoring
+* Resource utilization monitoring
+* AI risk analytics dashboard
+* Dockerized deployment
 
 ## Architecture
 
-```text
 Synthetic Pipeline Logs
-        ↓
-PostgreSQL
-        ↓
-Feature Engineering
-        ↓
-ML Failure Risk Model
-        ↓
-FastAPI Prediction API
-        ↓
-Prediction Logs
-        ↓
-Dashboard + Slack Alerts
-```
+          ↓
+      PostgreSQL
+          ↓
+ Feature Engineering
+          ↓
+  ML Risk Prediction
+          ↓
+      FastAPI API
+          ↓
+   Prediction Logs
+          ↓
+     Airflow DAG
+          ↓
+ Prometheus Metrics
+          ↓
+ Grafana Dashboards
+          ↓
+ Alert Rules Engine
+          ↓
+ Discord Notifications
+
 
 ## Tech Stack
 
-* Python
-* FastAPI
+### Data Engineering
+* Apache Airflow
 * PostgreSQL
-* SQLAlchemy
-* Pandas
-* Scikit-learn
 * Docker
+
+### Machine Learning
+* Scikit-learn
+* Pandas
+* NumPy
+
+### Backend
+* FastAPI
+* SQLAlchemy
+
+### Monitoring
+* Prometheus
+* Grafana
+
+### Alerting
+* Grafana Alerting
+* Discord Webhooks
+
+### Visualization
+* Grafana Dashboards
 * Jinja2
-* Slack Webhooks
+
 
 ## API Endpoints
 
@@ -161,14 +191,55 @@ This is an initial baseline and will be improved with richer operational pattern
 
 ## Future Improvements
 
-* Add Airflow DAG orchestration
-* Add MLflow experiment tracking
-* Add automated model retraining
-* Add Prometheus/Grafana monitoring
-* Add authentication
-* Add CI/CD pipeline
-* Deploy to cloud
-* Use real pipeline execution logs
+* MLflow experiment tracking
+* Automated model retraining
+* Model registry
+* Drift detection
+* CI/CD pipeline
+* Kubernetes deployment
+* Cloud deployment (AWS/Azure/GCP)
+* Real production pipeline logs
+
+
+## Monitoring & Alerting
+
+PredictOps includes a complete observability layer.
+
+### Airflow
+- ETL orchestration
+- Scheduled pipeline execution
+- Runtime tracking
+
+### Prometheus
+- Runtime metrics
+- Resource metrics
+- Risk prediction metrics
+- Pipeline health metrics
+
+### Grafana
+- Executive dashboards
+- Pipeline performance monitoring
+- Resource monitoring
+- AI risk analytics
+
+### Alerting
+- High Risk Prediction Alert
+- Runtime SLA Alert
+- CPU Usage Alert
+- Memory Usage Alert
+- Failure Risk Score Alert
+
+### Discord Notifications
+
+Real-time notifications are automatically sent when:
+
+- Pipeline runtime exceeds SLA
+- Memory usage exceeds threshold
+- CPU usage exceeds threshold
+- Failure risk becomes critical
+
+Resolved alerts are also automatically sent.
+
 
 ## Screenshots
 
@@ -207,8 +278,64 @@ This is an initial baseline and will be improved with richer operational pattern
 ### Docker Containers
 ![Docker Containers](dashboard/11_Docker_Containers.png)
 
+## Screenshots
+
+### Airflow DAG Overview
+![Airflow DAG](dashboard/airflow_dag_overview.png)
+
+### Airflow Execution History
+![Airflow Runs](dashboard/airflow_execution_history.png)
+
+### Prometheus Metrics Query
+![Prometheus](dashboard/prometheus_query.png)
+
+### Grafana Executive Dashboard
+![Grafana Executive](dashboard/grafana_executive_dashboard.png)
+
+### Grafana Pipeline Performance
+![Pipeline Performance](dashboard/grafana_pipeline_performance.png)
+
+### Grafana Resource Monitoring
+![Resource Monitoring](dashboard/grafana_resource_monitoring.png)
+
+### Grafana AI Analytics
+![AI Analytics](dashboard/grafana_ai_analytics.png)
+
+### Grafana Alert Rules
+![Alert Rules](dashboard/grafana_alert_rules.png)
+
+### Discord Alert Notification
+![Discord Alert](dashboard/discord_high_risk_alert.png)
+
+### Discord Alert Resolution
+![Discord Resolution](dashboard/discord_alert_resolved.png)
+
 
 ## Project Status
 
-PredictOps currently supports end-to-end ML risk prediction, API serving, PostgreSQL logging, dashboard visualization, Slack alerting, and Dockerized execution.
+PredictOps is a complete end-to-end predictive data reliability platform.
+
+Current capabilities:
+
+✅ Machine learning failure prediction
+
+✅ FastAPI prediction service
+
+✅ PostgreSQL operational data storage
+
+✅ Airflow ETL orchestration
+
+✅ Prometheus metrics collection
+
+✅ Grafana dashboards
+
+✅ Grafana alert management
+
+✅ Discord alert notifications
+
+✅ Dockerized deployment
+
+Next milestone:
+
+🚀 MLflow experiment tracking and model lifecycle management
 
