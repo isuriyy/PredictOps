@@ -243,17 +243,19 @@ Resolved alerts are also automatically sent.
 
 ## Screenshots
 
-### Swagger API
-![Swagger API](dashboard/03_swagger_api.png)
-
 ### Dashboard
 ![Dashboard](dashboard/01_Dashboard.png)
 
 ### Slack Alert Integration
 ![Slack Alert](dashboard/02_Slack_Alerts.png)
 
+### Swagger API
+![Swagger API](dashboard/03_swagger_api.png)
+
 ### Dockerized Deployment
 ![Docker Containers](dashboard/04_Docker_containers.png)
+
+---
 
 ## Monitoring Dashboard
 
@@ -261,7 +263,7 @@ Resolved alerts are also automatically sent.
 ![Grafana Dashboard](dashboard/05_Grafana_Dashboard_1.png)
 
 ### Risk Distribution
-![Grafana Dashboard](dashboard/06_Grafana_Dashboard_2.png)
+![Risk Distribution](dashboard/06_Grafana_Dashboard_2.png)
 
 ### Prometheus Targets
 ![Prometheus Targets](dashboard/07_Prometheus_Targets.png)
@@ -278,35 +280,49 @@ Resolved alerts are also automatically sent.
 ### Docker Containers
 ![Docker Containers](dashboard/11_Docker_Containers.png)
 
+---
+
+## Airflow Pipeline Orchestration
+
 ### Airflow DAG Overview
-![Airflow DAG](dashboard/airflow_dag_overview.png)
+![Airflow DAG](dashboard/12_airflow_dag_overview.png)
 
 ### Airflow Execution History
-![Airflow Runs](dashboard/airflow_execution_history.png)
+![Airflow Runs](dashboard/13_airflow_pipeline_history.png)
+
+---
+
+## Prometheus Monitoring
 
 ### Prometheus Metrics Query
-![Prometheus](dashboard/prometheus_query.png)
+![Prometheus Query](dashboard/14_prometheus_metrics_query.png)
 
-### Grafana Executive Dashboard
-![Grafana Executive](dashboard/grafana_executive_dashboard.png)
+---
 
-### Grafana Pipeline Performance
-![Pipeline Performance](dashboard/grafana_pipeline_performance.png)
+## Grafana Observability
 
-### Grafana Resource Monitoring
-![Resource Monitoring](dashboard/grafana_resource_monitoring.png)
+### Executive Dashboard
+![Grafana Executive](dashboard/15_grafana_executive_dashboard.png)
 
-### Grafana AI Analytics
-![AI Analytics](dashboard/grafana_ai_analytics.png)
+### Pipeline Performance
+![Pipeline Performance](dashboard/16_grafana_pipeline_performance.png)
 
-### Grafana Alert Rules
-![Alert Rules](dashboard/grafana_alert_rules.png)
+### Resource Monitoring
+![Resource Monitoring](dashboard/17_grafana_resource_monitoring.png)
 
-### Discord Alert Notification
-![Discord Alert](dashboard/discord_high_risk_alert.png)
+### AI Analytics Dashboard
+![AI Analytics](dashboard/18_grafana_ai_analytics.png)
+
+---
+
+## Incident Alerting
+
+### Discord High Risk Alert
+![Discord Alert](dashboard/19_discord_high_risk_alert.png)
 
 ### Discord Alert Resolution
-![Discord Resolution](dashboard/discord_alert_resolved.png)
+![Discord Resolution](dashboard/20_Pipeline%20Runtime%20SLA%20Alert%20Resolved.png)
+
 
 
 ## Project Status
