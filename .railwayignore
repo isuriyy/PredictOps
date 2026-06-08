@@ -18,12 +18,9 @@ mlruns
 __pycache__
 *.pyc
 .git
-ml/models/*.pkl
 data/
 airflow/logs/
 dashboard/*.png
-ml/models/
 data/
 airflow/logs/
 dashboard/
-!ml/models/predictive_failure_model_threshold.pkl
