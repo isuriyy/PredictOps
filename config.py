@@ -7,7 +7,7 @@ load_dotenv(BASE_DIR / ".env")
 
 DB_USER = os.getenv("DB_USER", "postgres")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_HOST = os.getenv("DB_HOST", "db")
 DB_PORT = os.getenv("DB_PORT", "5432")
 DB_NAME = os.getenv("DB_NAME", "predictops")
 
@@ -21,6 +21,16 @@ SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL")
 MODEL_PATH = os.getenv(
     "MODEL_PATH",
     "ml/models/predictive_failure_model_threshold.pkl"
+)
+
+MODEL_NAME = os.getenv(
+    "MODEL_NAME",
+    "PredictOpsFailureClassifier"
+)
+
+MODEL_ALIAS = os.getenv(
+    "MODEL_ALIAS",
+    "champion"
 )
 
 HIGH_RISK_THRESHOLD = float(os.getenv("HIGH_RISK_THRESHOLD", "0.70"))
