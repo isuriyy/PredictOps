@@ -24,6 +24,46 @@ app = FastAPI(title="PredictOps API")
 
 model = joblib.load(MODEL_PATH)
 engine = create_engine(DATABASE_URL)
+
+engine = create_engine(DATABASE_URL)
+
+# Auto-create tables on startup
+with engine.connect() as conn:
+    conn.execute(__import__('sqlalchemy').text("""
+        CREATE TABLE IF NOT EXISTS prediction_logs (
+            id SERIAL PRIMARY KEY,
+            prev_runtime FLOAT,
+            prev_rows FLOAT,
+            prev_cpu FLOAT,
+            prev_memory FLOAT,
+            prev_retries INTEGER,
+            runtime_avg_last_5 FLOAT,
+            rows_avg_last_5 FLOAT,
+            retry_sum_last_5 INTEGER,
+            failure_count_last_5 INTEGER,
+            sla_breach_count_last_5 INTEGER,
+            prediction_time TIMESTAMP,
+            failure_risk_score FLOAT,
+            risk_level VARCHAR(10)
+        )
+    """))
+    conn.execute(__import__('sqlalchemy').text("""
+        CREATE TABLE IF NOT EXISTS pipeline_runs (
+            id SERIAL PRIMARY KEY,
+            pipeline_name VARCHAR(100),
+            runtime_seconds FLOAT,
+            rows_processed INTEGER,
+            cpu_usage FLOAT,
+            memory_usage FLOAT,
+            retries INTEGER,
+            status VARCHAR(20),
+            failure_risk_score FLOAT,
+            risk_level VARCHAR(10),
+            run_time TIMESTAMP DEFAULT NOW()
+        )
+    """))
+    conn.commit()
+    
 templates = Jinja2Templates(directory="api/templates")
 total_predictions_gauge = Gauge("predictops_total_predictions", "Total recent predictions")
 high_risk_gauge = Gauge("predictops_high_risk_count", "High risk prediction count")
